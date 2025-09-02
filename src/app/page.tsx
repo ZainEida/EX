@@ -126,18 +126,19 @@ export default function Home() {
           </div>
 
           {/* Category Navigation - 5 Main Buttons */}
-          <nav className="flex gap-3 overflow-x-auto scrollbar-hide pb-6 mt-4 justify-center">
+          <nav className="flex gap-2 sm:gap-3 overflow-x-auto scrollbar-hide pb-6 mt-4 justify-start sm:justify-center">
             {categories.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`category-button flex items-center gap-2 whitespace-nowrap px-6 py-4 text-base rounded-2xl transition-all duration-300 min-w-max ${activeCategory === cat.id
+                className={`category-button flex items-center gap-1 sm:gap-2 whitespace-nowrap px-3 sm:px-6 py-3 sm:py-4 text-sm sm:text-base rounded-2xl transition-all duration-300 min-w-max flex-shrink-0 ${activeCategory === cat.id
                   ? "active text-black shadow-lg"
                   : "text-white hover:bg-gray-800/50 hover:scale-105"
                   }`}
               >
-                <span className="text-xl">{cat.icon}</span>
-                <span>{cat.title}</span>
+                <span className="text-lg sm:text-xl">{cat.icon}</span>
+                <span className="hidden sm:inline">{cat.title}</span>
+                <span className="sm:hidden">{cat.title.length > 8 ? cat.title.substring(0, 8) + '...' : cat.title}</span>
               </button>
             ))}
           </nav>
