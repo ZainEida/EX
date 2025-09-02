@@ -160,17 +160,17 @@ export default function Home() {
 
           {/* Category Image - Only show when not searching */}
           {!searchQuery.trim() && (
-            <div className="max-w-4xl mx-auto mb-8">
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+            <div className="max-w-5xl mx-auto mb-8">
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl">
                 <img
                   src={categories.find((c) => c.id === activeCategory)?.photoUrl}
                   alt={categories.find((c) => c.id === activeCategory)?.title}
-                  className="w-full h-64 sm:h-80 lg:h-96 object-cover"
+                  className="w-full h-80 sm:h-96 lg:h-[500px] object-cover"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                <div className="absolute bottom-4 right-4">
-                  <h3 className="text-2xl sm:text-3xl font-bold text-white">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                <div className="absolute bottom-6 right-6">
+                  <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white drop-shadow-2xl">
                     {categories.find((c) => c.id === activeCategory)?.title}
                   </h3>
                 </div>
@@ -178,26 +178,36 @@ export default function Home() {
             </div>
           )}
 
-          {/* Products Grid */}
-          <section className={`grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-4xl mx-auto ${isLoading ? 'opacity-50' : ''}`}>
+          {/* Menu Items List - Clean and Simple */}
+          <section className={`max-w-4xl mx-auto ${isLoading ? 'opacity-50' : ''}`}>
             {visibleItems.length > 0 ? (
-              visibleItems.map((item, index) => (
-                <article
-                  key={item.id}
-                  className="product-card group rounded-2xl shadow-xl overflow-hidden bg-gray-800/30 backdrop-blur-sm border border-gray-700/50"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <div className="p-4 sm:p-6">
-                    <h3 className="text-lg sm:text-xl font-bold text-white mb-2 text-center">{item.title}</h3>
-                    {item.description && (
-                      <p className="text-gray-400 text-sm mb-4 text-center line-clamp-2">{item.description}</p>
-                    )}
-                    <div className="flex items-center justify-center">
-                      <span className="text-xl sm:text-2xl font-bold text-orange-500" dir="ltr">{item.priceTl} TL</span>
+              <div className="bg-gray-900/50 backdrop-blur-sm rounded-3xl p-6 sm:p-8 border border-gray-700/50 shadow-2xl">
+                <div className="grid gap-4 sm:gap-6">
+                  {visibleItems.map((item, index) => (
+                    <div
+                      key={item.id}
+                      className="menu-item-card group flex items-center justify-between p-4 sm:p-6 rounded-2xl bg-gray-800/30 hover:bg-gray-800/60 border border-gray-700/50 hover:border-orange-500/50 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl cursor-pointer"
+                      style={{ animationDelay: `${index * 100}ms` }}
+                    >
+                      <div className="flex-1 text-right">
+                        <h3 className="text-lg sm:text-xl font-bold text-white mb-1 group-hover:text-orange-400 transition-colors duration-300">
+                          {item.title}
+                        </h3>
+                        {item.description && (
+                          <p className="text-gray-400 text-sm group-hover:text-gray-300 transition-colors duration-300">
+                            {item.description}
+                          </p>
+                        )}
+                      </div>
+                      <div className="ml-4">
+                        <span className="text-xl sm:text-2xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors duration-300" dir="ltr">
+                          {item.priceTl} TL
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                </article>
-              ))
+                  ))}
+                </div>
+              </div>
             ) : (
               <div className="col-span-full text-center py-12">
                 <div className="text-6xl mb-4">🔍</div>
