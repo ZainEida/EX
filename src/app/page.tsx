@@ -126,9 +126,11 @@ export default function Home() {
 
             {/* QR Code Button */}
             <div className="flex-shrink-0">
-              <button className="qr-button bg-gradient-to-br from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white p-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-                <span className="text-xl">📱</span>
-              </button>
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5bZGozmgE9959EAiR1bT706EeF24KuPrcZg&s"
+                alt="QR Code"
+                className="w-12 h-12 rounded-xl object-cover shadow-lg"
+              />
             </div>
           </div>
 
