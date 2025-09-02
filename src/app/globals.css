@@ -572,6 +572,117 @@ body {
   transform: translateY(0);
 }
 
+/* Contact button styling */
+.contact-btn {
+  background: var(--gradient-primary);
+  color: #000000;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-button);
+}
+
+.contact-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Back button styling */
+.back-btn {
+  background: rgba(17, 17, 17, 0.8);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background: rgba(34, 34, 34, 0.9);
+  border-color: var(--primary);
+}
+
+/* Contact card styling */
+.contact-card {
+  background: rgba(17, 17, 17, 0.9);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--shadow-card);
+  transition: all 0.4s ease;
+}
+
+.contact-card:hover {
+  border-color: rgba(255, 153, 0, 0.3);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Contact item styling */
+.contact-item {
+  background: rgba(17, 17, 17, 0.6);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.contact-item:hover {
+  background: rgba(34, 34, 34, 0.8);
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-button);
+}
+
+/* Contact item icon styling */
+.contact-item .w-12 {
+  background: rgba(255, 153, 0, 0.2);
+  border: 2px solid rgba(255, 153, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.contact-item:hover .w-12 {
+  background: rgba(255, 153, 0, 0.3);
+  border-color: var(--primary);
+  transform: scale(1.1);
+}
+
+/* Phone number link styling */
+.contact-item a[href^="tel:"] {
+  transition: all 0.3s ease;
+}
+
+.contact-item a[href^="tel:"]:hover {
+  text-shadow: 0 0 10px rgba(255, 153, 0, 0.5);
+}
+
+/* Call to action section */
+.contact-card .bg-orange-500\/10 {
+  background: rgba(255, 153, 0, 0.1);
+  border: 1px solid rgba(255, 153, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.contact-card .bg-orange-500\/10:hover {
+  background: rgba(255, 153, 0, 0.15);
+  border-color: rgba(255, 153, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Responsive contact page */
+@media (max-width: 768px) {
+  .contact-card {
+    padding: 1.5rem;
+  }
+
+  .contact-item {
+    padding: 1rem;
+  }
+
+  .contact-item .w-12 {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .contact-item .text-2xl {
+    font-size: 1.5rem;
+  }
+}
+
 /* Footer styling */
 .footer {
   background: rgba(17, 17, 17, 0.9);

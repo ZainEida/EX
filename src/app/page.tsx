@@ -111,6 +111,16 @@ export default function Home() {
               </div>
             </div>
 
+            {/* Contact Us Button */}
+            <div className="w-full lg:w-auto mb-4 lg:mb-0">
+              <button
+                onClick={() => window.location.href = '/contact'}
+                className="contact-btn px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 transform"
+              >
+                تواصل معنا
+              </button>
+            </div>
+
             {/* Search Bar */}
             <div className="w-full lg:w-80">
               <div className="relative">
