@@ -153,82 +153,39 @@ export default function Home() {
             <div className="w-16 h-1 bg-gradient-to-r from-orange-500 to-orange-600 mx-auto rounded-full"></div>
           </div>
 
-          {/* Big Section Image and Types */}
-          {!searchQuery.trim() && currentCategory && (
-            <section className="max-w-4xl mx-auto">
-              {/* Big Section Image */}
-              <div className="mb-8">
-                <img
-                  src={currentCategory.photoUrl}
-                  alt={currentCategory.title}
-                  className="w-full h-64 sm:h-80 lg:h-96 object-cover rounded-2xl shadow-2xl"
-                  loading="lazy"
-                />
-              </div>
-
-              {/* Types List */}
-              <div className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-6 border border-gray-700">
-                <h3 className="text-xl font-bold text-white mb-6 text-center">أنواع {currentCategory.title}</h3>
-                <div className="grid gap-4">
-                  {visibleItems.map((item, index) => (
-                    <div
-                      key={item.id}
-                      className="flex items-center justify-between p-4 bg-gray-700/50 rounded-xl hover:bg-gray-700/70 transition-all duration-300"
-                      style={{ animationDelay: `${index * 100}ms` }}
-                    >
-                      <div className="flex-1">
-                        <h4 className="text-lg font-semibold text-white mb-1">{item.title}</h4>
-                        {item.description && (
-                          <p className="text-gray-300 text-sm">{item.description}</p>
-                        )}
-                      </div>
-                      <div className="text-right">
-                        <span className="text-xl font-bold text-orange-500" dir="ltr">{item.priceTl} TL</span>
-                      </div>
+          {/* Products Grid */}
+          <section className={`grid gap-4 grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-7xl mx-auto ${isLoading ? 'opacity-50' : ''}`}>
+            {visibleItems.length > 0 ? (
+              visibleItems.map((item, index) => (
+                <article
+                  key={item.id}
+                  className="product-card group rounded-2xl shadow-xl overflow-hidden"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <div className="relative">
+                    <div className="aspect-[4/3] bg-gray-800 flex items-center justify-center text-gray-400 skeleton rounded-t-2xl">
+                      <span className="text-base">{item.title}</span>
                     </div>
-                  ))}
-                </div>
-              </div>
-            </section>
-          )}
-
-          {/* Search Results */}
-          {searchQuery.trim() && (
-            <section className="max-w-4xl mx-auto">
-              <div className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-6 border border-gray-700">
-                <h3 className="text-xl font-bold text-white mb-6 text-center">نتائج البحث</h3>
-                <div className="grid gap-4">
-                  {visibleItems.map((item, index) => (
-                    <div
-                      key={item.id}
-                      className="flex items-center justify-between p-4 bg-gray-700/50 rounded-xl hover:bg-gray-700/70 transition-all duration-300"
-                      style={{ animationDelay: `${index * 100}ms` }}
-                    >
-                      <div className="flex-1">
-                        <h4 className="text-lg font-semibold text-white mb-1">{item.title}</h4>
-                        <p className="text-gray-400 text-sm">{categories.find(c => c.id === item.categoryId)?.title}</p>
-                        {item.description && (
-                          <p className="text-gray-300 text-sm mt-1">{item.description}</p>
-                        )}
-                      </div>
-                      <div className="text-right">
-                        <span className="text-xl font-bold text-orange-500" dir="ltr">{item.priceTl} TL</span>
-                      </div>
+                  </div>
+                  <div className="p-3 sm:p-6">
+                    <h3 className="text-sm sm:text-lg font-bold text-white mb-1 sm:mb-2">{item.title}</h3>
+                    {item.description && (
+                      <p className="text-gray-400 text-xs sm:text-sm mb-2 sm:mb-4 line-clamp-2">{item.description}</p>
+                    )}
+                    <div className="flex items-center justify-center">
+                      <span className="text-lg sm:text-2xl font-bold text-orange-500" dir="ltr">{item.priceTl} TL</span>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                </article>
+              ))
+            ) : (
+              <div className="col-span-full text-center py-12">
+                <div className="text-6xl mb-4">🔍</div>
+                <h3 className="text-xl font-semibold text-white mb-2">لا توجد نتائج</h3>
+                <p className="text-gray-400">جرب البحث بكلمات مختلفة</p>
               </div>
-            </section>
-          )}
-
-          {/* No Results */}
-          {searchQuery.trim() && visibleItems.length === 0 && (
-            <div className="text-center py-12">
-              <div className="text-6xl mb-4">🔍</div>
-              <h3 className="text-xl font-semibold text-white mb-2">لا توجد نتائج</h3>
-              <p className="text-gray-400">جرب البحث بكلمات مختلفة</p>
-            </div>
-          )}
+            )}
+          </section>
         </main>
 
         {/* Footer */}
