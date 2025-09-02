@@ -683,6 +683,178 @@ body {
   }
 }
 
+/* Enhanced mobile contact page styling */
+@media (max-width: 640px) {
+  .contact-card {
+    padding: 1rem;
+    margin: 0 0.5rem;
+    border-radius: 1rem;
+  }
+
+  .contact-item {
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+  }
+
+  .contact-item .w-10 {
+    width: 2.5rem;
+    height: 2.5rem;
+    min-width: 2.5rem;
+  }
+
+  .contact-item .text-lg {
+    font-size: 1rem;
+  }
+
+  .contact-item .text-xl {
+    font-size: 1.125rem;
+  }
+
+  .contact-item .text-2xl {
+    font-size: 1.25rem;
+  }
+
+  .contact-item .text-base {
+    font-size: 0.875rem;
+  }
+
+  .contact-item .text-sm {
+    font-size: 0.75rem;
+  }
+
+  /* Better touch targets for mobile */
+  .contact-item a[href^="tel:"] {
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    display: inline-block;
+    min-height: 2.5rem;
+    line-height: 1.5;
+  }
+
+  /* Mobile-optimized working hours */
+  .contact-card .bg-gray-800\/30 {
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+  }
+
+  .contact-card .bg-gray-800\/30 .flex-col {
+    gap: 0.5rem;
+  }
+
+  /* Mobile call-to-action button */
+  .contact-card .bg-orange-500\/10 {
+    padding: 1rem;
+    border-radius: 1rem;
+  }
+
+  .contact-card .bg-orange-500\/10 a {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    font-size: 1rem;
+    min-height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Mobile header optimization */
+  .logo-header {
+    padding: 0.75rem 1rem;
+    border-radius: 1rem;
+  }
+
+  .logo-container {
+    width: 3rem;
+    height: 3rem;
+    min-width: 3rem;
+  }
+
+  .back-btn {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    min-height: 3rem;
+    font-size: 0.875rem;
+  }
+
+  /* Mobile title optimization */
+  .page-title {
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+
+  /* Mobile spacing optimization */
+  .contact-card .grid {
+    gap: 1.5rem;
+  }
+
+  .contact-card .space-y-4>*+* {
+    margin-top: 1rem;
+  }
+
+  .contact-card .space-y-6>*+* {
+    margin-top: 1.5rem;
+  }
+}
+
+/* Extra small mobile devices */
+@media (max-width: 480px) {
+  .contact-card {
+    padding: 0.75rem;
+    margin: 0 0.25rem;
+  }
+
+  .contact-item {
+    padding: 0.5rem;
+  }
+
+  .contact-item .w-10 {
+    width: 2.25rem;
+    height: 2.25rem;
+    min-width: 2.25rem;
+  }
+
+  .contact-item .text-lg {
+    font-size: 0.875rem;
+  }
+
+  .contact-item .text-xl {
+    font-size: 1rem;
+  }
+
+  .page-title {
+    font-size: 1.25rem;
+  }
+
+  .logo-header {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .logo-container {
+    width: 2.5rem;
+    height: 2.5rem;
+    min-width: 2.5rem;
+  }
+}
+
+/* Touch-friendly hover states for mobile */
+@media (hover: none) and (pointer: coarse) {
+  .contact-item:hover {
+    transform: none;
+    box-shadow: var(--shadow-card);
+  }
+
+  .contact-item:active {
+    transform: scale(0.98);
+    background: rgba(34, 34, 34, 0.8);
+    border-color: var(--primary);
+  }
+
+  .contact-btn:active,
+  .back-btn:active {
+    transform: scale(0.95);
+  }
+}
+
 /* Footer styling */
 .footer {
   background: rgba(17, 17, 17, 0.9);
