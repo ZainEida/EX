@@ -123,6 +123,13 @@ export default function Home() {
                 </div>
               </div>
             </div>
+
+            {/* QR Code Button */}
+            <div className="flex-shrink-0">
+              <button className="qr-button bg-gradient-to-br from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white p-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                <span className="text-xl">📱</span>
+              </button>
+            </div>
           </div>
 
           {/* Category Navigation - 5 Main Buttons */}
