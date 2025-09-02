@@ -4,7 +4,7 @@ import { useMemo, useState, useEffect } from "react";
 type Category = {
   id: string;
   title: string; // Arabic title
-  photoUrl?: string; // empty until user provides
+  photoUrl: string; // main section image
   icon?: string; // emoji icon for category
 };
 
@@ -13,45 +13,43 @@ type MenuItem = {
   categoryId: string;
   title: string; // Arabic name
   priceTl: number;
-  photoUrl?: string; // empty until user provides
   description?: string; // optional description
 };
 
-
-
 const categories: Category[] = [
-  { id: "fresh-juices", title: "عصائر فرش", icon: "🥤" },
-  { id: "shawarma", title: "وجبات شاورما", icon: "🌯" },
-  { id: "fast-food", title: "الأكلات السريعة", icon: "🍔" },
-  { id: "desserts", title: "حلويات", icon: "🍰" },
-  { id: "hot-drinks", title: "مشروبات ساخنة", icon: "☕" },
+  { id: "shawarma", title: "وجبات شاورما", photoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5bZGozmgE9959EAiR1bT706EeF24KuPrcZg&s", icon: "🌯" },
+  { id: "waffle", title: "وافل", photoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuNSP3TonX7UD-Or7PLYGEheAzdy_ZFiMNzQ&s", icon: "🧇" },
+  { id: "pizza", title: "بيتزا", photoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRM03UAWVodpyvAZvJ7CpbFaGhxjxQOWiczTg&s", icon: "🍕" },
+  { id: "hamburger", title: "همبرغر", photoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjQTvUkA1MWdg98x4cqJXOvLgdBt5Xlvx0qw&s", icon: "🍔" },
+  { id: "fresh-juices", title: "عصائر فرش", photoUrl: "https://i.ytimg.com/vi/N9NAtERJ-hU/maxresdefault.jpg", icon: "🥤" },
 ];
 
 const items: MenuItem[] = [
-  // عصائر فرش
-  { id: "bolo-juice", categoryId: "fresh-juices", title: "عصير بولو", priceTl: 30, photoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX_PkFLuhlyIhF7T-4sNyoeGXLdWCZGGLZEA&s", description: "عصير طازج من الفواكه الطبيعية" },
-  { id: "pomegranate-juice", categoryId: "fresh-juices", title: "عصير رمان", priceTl: 20, photoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOX5PjWsj26ZiWTFkef_Y5HyLWobxZ0-YzEQ&s", description: "عصير رمان طبيعي 100%" },
-  { id: "orange-juice", categoryId: "fresh-juices", title: "عصير برتقال", priceTl: 25, photoUrl: "https://zerolounge.link/wpconten/uploads/2023/12/%D8%A8%D8%B1%D8%AA%D9%82%D8%A7%D9%84-%D9%81%D8%B1%D9%8A%D8%B4-%D9%A2.%D9%A0%D9%A0%D9%A0.jpg", description: "عصير برتقال طازج يومياً" },
   // وجبات شاورما
-  { id: "shawarma-bill-meal", categoryId: "shawarma", title: "شاورما عربي وجبة دبل", priceTl: 160, photoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5bZGozmgE9959EAiR1bT706EeF24KuPrcZg&s", description: "وجبة كاملة مع البطاطس والمشروب" },
-  { id: "shawarma-regular-meal", categoryId: "shawarma", title: "شاورما عربي وجبة عادي", priceTl: 120, photoUrl: "https://goldenmeal.jo/Upload/Product/57f2badf-4402-4f4e-a815-d692a1f333e0.jpg", description: "وجبة عادية مع البطاطس" },
-  { id: "shawarma-lafah-adi", categoryId: "shawarma", title: "شاورما عربي لفة عادي", priceTl: 60, photoUrl: "https://modo3.com/thumbs/fit630x300/160944/1493759099/%D8%B9%D9%85%D9%84_%D8%A7%D9%84%D8%B4%D8%A7%D9%88%D8%B1%D9%85%D8%A7_%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%D9%8A.jpg", description: "لفة شاورما عربية تقليدية" },
-  { id: "shawarma-lafah-bill", categoryId: "shawarma", title: "شاورما عربي لفة دبل", priceTl: 90, photoUrl: "https://images.deliveryhero.io/image/hungerstation/menuitem/image_url_ref/3cae3a1e78844607013f2ceb666b765a.jpeg?width=1440&quality=75&webp=true", description: "لفة دبل مع لحم إضافي" },
-  // الأكلات السريعة
-  { id: "burger", categoryId: "fast-food", title: "همبرغر", priceTl: 200, photoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjQTvUkA1MWdg98x4cqJXOvLgdBt5Xlvx0qw&s", description: "برجر لحم طازج مع الخضار" },
-  { id: "pizza", categoryId: "fast-food", title: "بيتزا", priceTl: 140, photoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRM03UAWVodpyvAZvJ7CpbFaGhxjxQOWiczTg&s", description: "بيتزا إيطالية أصيلة" },
-  { id: "crispy", categoryId: "fast-food", title: "كريسبي", priceTl: 200, photoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxH6nY0CxxL5uUy9CPo73h0Ez37rvibaUE5w&s", description: "دجاج مقرمش مع الصلصة" },
-  { id: "kibbeh", categoryId: "fast-food", title: "كبة", priceTl: 100, photoUrl: "https://i.ytimg.com/vi/KcWN0JrZTX8/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLB32aFDpztx5-UwYFqd0pfJ23gj4g", description: "كبة لبنانية تقليدية" },
-  // حلويات
-  { id: "waffle", categoryId: "desserts", title: "وافل", priceTl: 60, photoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuNSP3TonX7UD-Or7PLYGEheAzdy_ZFiMNzQ&s", description: "وافل بلجيكي مع الشوكولاتة" },
-  { id: "cake", categoryId: "desserts", title: "كيك", priceTl: 80, photoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlJQjQRmCXK7MKp6FpBUQY0Bc2DvSAlBZrfA&s", description: "كيك شوكولاتة طازج" },
-  { id: "pancake", categoryId: "desserts", title: "بان كيك", priceTl: 40, photoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRM3E41Mk-OB4f25Ak-s68vUJSxyHENiaViog&s", description: "بان كيك أمريكي مع القطر" },
-  // مشروبات ساخنة
-  { id: "coffee", categoryId: "hot-drinks", title: "قهوة", priceTl: 25, photoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTc1bzJsrkkV3mNcqQ4QtIWHrghR8FxDemK7w&s", description: "قهوة تركية أصيلة" },
-  { id: "nescafe", categoryId: "hot-drinks", title: "نسكافيه", priceTl: 20, photoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyJRoeZM6jlYdR060A1kYucUK__R77-3xzkw&s", description: "نسكافيه مع الحليب" },
-  { id: "ice-coffee", categoryId: "hot-drinks", title: "آيس كوفي", priceTl: 30, photoUrl: "https://cdn.shopify.com/s/files/1/0642/0158/8951/files/e577860a00c021fbf86360f956588847_480x480.webp?v=1732791723", description: "قهوة باردة منعشة" },
-  { id: "tea", categoryId: "hot-drinks", title: "شاي", priceTl: 10, photoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRox3Qe3UnnoolsZTF8qNSr7N_-tmTU-OXS-g&s", description: "جاي ساخن" },
+  { id: "shawarma-bill-meal", categoryId: "shawarma", title: "شاورما عربي وجبة دبل", priceTl: 160, description: "وجبة كاملة مع البطاطس والمشروب" },
+  { id: "shawarma-regular-meal", categoryId: "shawarma", title: "شاورما عربي وجبة عادي", priceTl: 120, description: "وجبة عادية مع البطاطس" },
+  { id: "shawarma-lafah-adi", categoryId: "shawarma", title: "شاورما عربي لفة عادي", priceTl: 60, description: "لفة شاورما عربية تقليدية" },
+  { id: "shawarma-lafah-bill", categoryId: "shawarma", title: "شاورما عربي لفة دبل", priceTl: 90, description: "لفة دبل مع لحم إضافي" },
 
+  // وافل
+  { id: "waffle-belgian", categoryId: "waffle", title: "الوافل البلجيكي", priceTl: 50, description: "وافل بلجيكي تقليدي" },
+  { id: "waffle-classic", categoryId: "waffle", title: "الوافل الكلاسيكي", priceTl: 70, description: "وافل كلاسيكي مع الشوكولاتة" },
+  { id: "waffle-bubble", categoryId: "waffle", title: "الوافل البابلي", priceTl: 100, description: "وافل بابلي مميز" },
+
+  // بيتزا
+  { id: "pizza-margherita", categoryId: "pizza", title: "بيتزا مارغريتا", priceTl: 80, description: "بيتزا إيطالية كلاسيكية" },
+  { id: "pizza-four-seasons", categoryId: "pizza", title: "بيتزا الفصول الأربعة", priceTl: 100, description: "بيتزا مع خضار الموسم" },
+  { id: "pizza-marinara", categoryId: "pizza", title: "بيتزا مارينارا", priceTl: 150, description: "بيتزا مع صلصة الطماطم" },
+
+  // همبرغر
+  { id: "cheese-burger", categoryId: "hamburger", title: "تشيز برجر", priceTl: 150, description: "برجر مع جبنة ذائبة" },
+  { id: "chicken-burger", categoryId: "hamburger", title: "برجر دجاج", priceTl: 200, description: "برجر دجاج طازج" },
+  { id: "big-mac", categoryId: "hamburger", title: "بيج ماك", priceTl: 250, description: "برجر كبير مع طبقات متعددة" },
+
+  // عصائر فرش
+  { id: "bolo-juice", categoryId: "fresh-juices", title: "عصير بولو", priceTl: 30, description: "عصير طازج من الفواكه الطبيعية" },
+  { id: "pomegranate-juice", categoryId: "fresh-juices", title: "عصير رمان", priceTl: 20, description: "عصير رمان طبيعي 100%" },
+  { id: "orange-juice", categoryId: "fresh-juices", title: "عصير برتقال", priceTl: 25, description: "عصير برتقال طازج يومياً" },
 ];
 
 export default function Home() {
@@ -65,8 +63,6 @@ export default function Home() {
     const timer = setTimeout(() => setIsLoading(false), 300);
     return () => clearTimeout(timer);
   }, [activeCategory]);
-
-
 
   const visibleItems = useMemo(() => {
     let filtered = items;
@@ -84,7 +80,7 @@ export default function Home() {
     return filtered;
   }, [activeCategory, searchQuery]);
 
-
+  const currentCategory = categories.find((c) => c.id === activeCategory);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white page-transition" dir="rtl">
@@ -129,8 +125,8 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Category Navigation */}
-          <nav className="flex gap-3 overflow-x-auto scrollbar-hide pb-6 mt-4">
+          {/* Category Navigation - 5 Main Buttons */}
+          <nav className="flex gap-3 overflow-x-auto scrollbar-hide pb-6 mt-4 justify-center">
             {categories.map((cat) => (
               <button
                 key={cat.id}
@@ -147,63 +143,92 @@ export default function Home() {
           </nav>
         </header>
 
-
-
         {/* Main Content */}
         <main className="space-y-8 mt-4 sm:mt-6">
           {/* Category Title */}
           <div className="text-center mb-6">
             <h2 className="text-2xl sm:text-3xl font-bold mb-6 page-title text-white">
-              {searchQuery.trim() ? "نتائج البحث" : categories.find((c) => c.id === activeCategory)?.title}
+              {searchQuery.trim() ? "نتائج البحث" : currentCategory?.title}
             </h2>
             <div className="w-16 h-1 bg-gradient-to-r from-orange-500 to-orange-600 mx-auto rounded-full"></div>
           </div>
 
-
-
-          {/* Products Grid */}
-          <section className={`grid gap-4 grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-7xl mx-auto ${isLoading ? 'opacity-50' : ''}`}>
-            {visibleItems.length > 0 ? (
-              visibleItems.map((item, index) => (
-                <article
-                  key={item.id}
-                  className="product-card group rounded-2xl shadow-xl overflow-hidden"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <div className="relative">
-                    {item.photoUrl ? (
-                      <img
-                        src={item.photoUrl}
-                        alt={item.title}
-                        className="w-full aspect-[4/3] object-cover group-hover:scale-105 transition-transform duration-500"
-                        loading="lazy"
-                      />
-                    ) : (
-                      <div className="aspect-[4/3] bg-gray-800 flex items-center justify-center text-gray-400 skeleton rounded-t-2xl">
-                        <span className="text-base">لا توجد صورة</span>
-                      </div>
-                    )}
-
-                  </div>
-                  <div className="p-3 sm:p-6">
-                    <h3 className="text-sm sm:text-lg font-bold text-white mb-1 sm:mb-2">{item.title}</h3>
-                    {item.description && (
-                      <p className="text-gray-400 text-xs sm:text-sm mb-2 sm:mb-4 line-clamp-2">{item.description}</p>
-                    )}
-                    <div className="flex items-center justify-center">
-                      <span className="text-lg sm:text-2xl font-bold text-orange-500" dir="ltr">{item.priceTl} TL</span>
-                    </div>
-                  </div>
-                </article>
-              ))
-            ) : (
-              <div className="col-span-full text-center py-12">
-                <div className="text-6xl mb-4">🔍</div>
-                <h3 className="text-xl font-semibold text-white mb-2">لا توجد نتائج</h3>
-                <p className="text-gray-400">جرب البحث بكلمات مختلفة</p>
+          {/* Big Section Image and Types */}
+          {!searchQuery.trim() && currentCategory && (
+            <section className="max-w-4xl mx-auto">
+              {/* Big Section Image */}
+              <div className="mb-8">
+                <img
+                  src={currentCategory.photoUrl}
+                  alt={currentCategory.title}
+                  className="w-full h-64 sm:h-80 lg:h-96 object-cover rounded-2xl shadow-2xl"
+                  loading="lazy"
+                />
               </div>
-            )}
-          </section>
+
+              {/* Types List */}
+              <div className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-6 border border-gray-700">
+                <h3 className="text-xl font-bold text-white mb-6 text-center">أنواع {currentCategory.title}</h3>
+                <div className="grid gap-4">
+                  {visibleItems.map((item, index) => (
+                    <div
+                      key={item.id}
+                      className="flex items-center justify-between p-4 bg-gray-700/50 rounded-xl hover:bg-gray-700/70 transition-all duration-300"
+                      style={{ animationDelay: `${index * 100}ms` }}
+                    >
+                      <div className="flex-1">
+                        <h4 className="text-lg font-semibold text-white mb-1">{item.title}</h4>
+                        {item.description && (
+                          <p className="text-gray-300 text-sm">{item.description}</p>
+                        )}
+                      </div>
+                      <div className="text-right">
+                        <span className="text-xl font-bold text-orange-500" dir="ltr">{item.priceTl} TL</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* Search Results */}
+          {searchQuery.trim() && (
+            <section className="max-w-4xl mx-auto">
+              <div className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-6 border border-gray-700">
+                <h3 className="text-xl font-bold text-white mb-6 text-center">نتائج البحث</h3>
+                <div className="grid gap-4">
+                  {visibleItems.map((item, index) => (
+                    <div
+                      key={item.id}
+                      className="flex items-center justify-between p-4 bg-gray-700/50 rounded-xl hover:bg-gray-700/70 transition-all duration-300"
+                      style={{ animationDelay: `${index * 100}ms` }}
+                    >
+                      <div className="flex-1">
+                        <h4 className="text-lg font-semibold text-white mb-1">{item.title}</h4>
+                        <p className="text-gray-400 text-sm">{categories.find(c => c.id === item.categoryId)?.title}</p>
+                        {item.description && (
+                          <p className="text-gray-300 text-sm mt-1">{item.description}</p>
+                        )}
+                      </div>
+                      <div className="text-right">
+                        <span className="text-xl font-bold text-orange-500" dir="ltr">{item.priceTl} TL</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* No Results */}
+          {searchQuery.trim() && visibleItems.length === 0 && (
+            <div className="text-center py-12">
+              <div className="text-6xl mb-4">🔍</div>
+              <h3 className="text-xl font-semibold text-white mb-2">لا توجد نتائج</h3>
+              <p className="text-gray-400">جرب البحث بكلمات مختلفة</p>
+            </div>
+          )}
         </main>
 
         {/* Footer */}
