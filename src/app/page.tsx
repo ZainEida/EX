@@ -111,29 +111,25 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Contact Us Button */}
-            <div className="w-full lg:w-auto mb-4 lg:mb-0">
-              <button
-                onClick={() => window.location.href = '/contact'}
-                className="contact-btn px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 transform"
-              >
-                تواصل معنا
-              </button>
-            </div>
-
-            {/* Search Bar */}
-            <div className="w-full lg:w-80">
+            {/* Search Bar with Contact Button */}
+            <div className="w-full lg:w-96">
               <div className="relative">
                 <input
                   type="text"
                   placeholder="البحث في القائمة..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300"
+                  className="w-full px-4 py-3 pr-32 bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300"
                 />
                 <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
                   🔍
                 </div>
+                <button
+                  onClick={() => window.location.href = '/contact'}
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 contact-btn px-4 py-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-sm font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 transform"
+                >
+                  تواصل معنا
+                </button>
               </div>
             </div>
           </div>
