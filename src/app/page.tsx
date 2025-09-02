@@ -4,7 +4,7 @@ import { useMemo, useState, useEffect } from "react";
 type Category = {
   id: string;
   title: string; // Arabic title
-  photoUrl: string; // main section image
+  photoUrl?: string; // main category image
   icon?: string; // emoji icon for category
 };
 
@@ -13,15 +13,16 @@ type MenuItem = {
   categoryId: string;
   title: string; // Arabic name
   priceTl: number;
+  photoUrl?: string; // empty until user provides
   description?: string; // optional description
 };
 
 const categories: Category[] = [
-  { id: "shawarma", title: "وجبات شاورما", photoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5bZGozmgE9959EAiR1bT706EeF24KuPrcZg&s", icon: "🌯" },
-  { id: "waffle", title: "وافل", photoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuNSP3TonX7UD-Or7PLYGEheAzdy_ZFiMNzQ&s", icon: "🧇" },
-  { id: "pizza", title: "بيتزا", photoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRM03UAWVodpyvAZvJ7CpbFaGhxjxQOWiczTg&s", icon: "🍕" },
-  { id: "hamburger", title: "همبرغر", photoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjQTvUkA1MWdg98x4cqJXOvLgdBt5Xlvx0qw&s", icon: "🍔" },
-  { id: "fresh-juices", title: "عصائر فرش", photoUrl: "https://i.ytimg.com/vi/N9NAtERJ-hU/maxresdefault.jpg", icon: "🥤" },
+  { id: "shawarma", title: "وجبات شاورما", icon: "🌯", photoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5bZGozmgE9959EAiR1bT706EeF24KuPrcZg&s" },
+  { id: "waffle", title: "وافل", icon: "🧇", photoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuNSP3TonX7UD-Or7PLYGEheAzdy_ZFiMNzQ&s" },
+  { id: "pizza", title: "بيتزا", icon: "🍕", photoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRM03UAWVodpyvAZvJ7CpbFaGhxjxQOWiczTg&s" },
+  { id: "burger", title: "همبرغر", icon: "🍔", photoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjQTvUkA1MWdg98x4cqJXOvLgdBt5Xlvx0qw&s" },
+  { id: "fresh-juices", title: "عصائر فرش", icon: "🥤", photoUrl: "https://i.ytimg.com/vi/N9NAtERJ-hU/maxresdefault.jpg" },
 ];
 
 const items: MenuItem[] = [
@@ -33,23 +34,23 @@ const items: MenuItem[] = [
 
   // وافل
   { id: "waffle-belgian", categoryId: "waffle", title: "الوافل البلجيكي", priceTl: 50, description: "وافل بلجيكي تقليدي" },
-  { id: "waffle-classic", categoryId: "waffle", title: "الوافل الكلاسيكي", priceTl: 70, description: "وافل كلاسيكي مع الشوكولاتة" },
+  { id: "waffle-classic", categoryId: "waffle", title: "الوافل الكلاسيكي", priceTl: 70, description: "وافل كلاسيكي مع القطر" },
   { id: "waffle-bubble", categoryId: "waffle", title: "الوافل البابلي", priceTl: 100, description: "وافل بابلي مميز" },
 
   // بيتزا
   { id: "pizza-margherita", categoryId: "pizza", title: "بيتزا مارغريتا", priceTl: 80, description: "بيتزا إيطالية كلاسيكية" },
-  { id: "pizza-four-seasons", categoryId: "pizza", title: "بيتزا الفصول الأربعة", priceTl: 100, description: "بيتزا مع خضار الموسم" },
-  { id: "pizza-marinara", categoryId: "pizza", title: "بيتزا مارينارا", priceTl: 150, description: "بيتزا مع صلصة الطماطم" },
+  { id: "pizza-four-seasons", categoryId: "pizza", title: "بيتزا الفصول الأربعة", priceTl: 100, description: "بيتزا متنوعة المكونات" },
+  { id: "pizza-marinara", categoryId: "pizza", title: "بيتزا مارينارا", priceTl: 150, description: "بيتزا مارينارا إيطالية" },
 
   // همبرغر
-  { id: "cheese-burger", categoryId: "hamburger", title: "تشيز برجر", priceTl: 150, description: "برجر مع جبنة ذائبة" },
-  { id: "chicken-burger", categoryId: "hamburger", title: "برجر دجاج", priceTl: 200, description: "برجر دجاج طازج" },
-  { id: "big-mac", categoryId: "hamburger", title: "بيج ماك", priceTl: 250, description: "برجر كبير مع طبقات متعددة" },
+  { id: "cheese-burger", categoryId: "burger", title: "تشيز برجر", priceTl: 15, description: "برجر مع جبنة" },
+  { id: "chicken-burger", categoryId: "burger", title: "برجر دجاج", priceTl: 200, description: "برجر دجاج طازج" },
+  { id: "big-mac", categoryId: "burger", title: "بيج ماك", priceTl: 250, description: "برجر كبير مع مكونات خاصة" },
 
   // عصائر فرش
-  { id: "bolo-juice", categoryId: "fresh-juices", title: "عصير بولو", priceTl: 30, description: "عصير طازج من الفواكه الطبيعية" },
-  { id: "pomegranate-juice", categoryId: "fresh-juices", title: "عصير رمان", priceTl: 20, description: "عصير رمان طبيعي 100%" },
-  { id: "orange-juice", categoryId: "fresh-juices", title: "عصير برتقال", priceTl: 25, description: "عصير برتقال طازج يومياً" },
+  { id: "bolo-juice", categoryId: "fresh-juices", title: "عصير بولو", priceTl: 30, description: "عصير بولو طازج" },
+  { id: "pomegranate-juice", categoryId: "fresh-juices", title: "عصير رمان", priceTl: 20, description: "عصير رمان طبيعي" },
+  { id: "orange-juice", categoryId: "fresh-juices", title: "عصير برتقال", priceTl: 25, description: "عصير برتقال طازج" },
 ];
 
 export default function Home() {
@@ -63,6 +64,8 @@ export default function Home() {
     const timer = setTimeout(() => setIsLoading(false), 300);
     return () => clearTimeout(timer);
   }, [activeCategory]);
+
+
 
   const visibleItems = useMemo(() => {
     let filtered = items;
@@ -80,7 +83,7 @@ export default function Home() {
     return filtered;
   }, [activeCategory, searchQuery]);
 
-  const currentCategory = categories.find((c) => c.id === activeCategory);
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white page-transition" dir="rtl">
@@ -125,13 +128,13 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Category Navigation - 5 Main Buttons */}
-          <nav className="category-navigation flex gap-3 overflow-x-auto scrollbar-hide pb-6 mt-4 justify-start sm:justify-center w-full">
+          {/* Category Navigation */}
+          <nav className="flex gap-3 overflow-x-auto scrollbar-hide pb-6 mt-4">
             {categories.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`category-button flex items-center gap-2 whitespace-nowrap px-6 py-4 text-base rounded-2xl transition-all duration-300 min-w-max flex-shrink-0 ${activeCategory === cat.id
+                className={`category-button flex items-center gap-2 whitespace-nowrap px-6 py-4 text-base rounded-2xl transition-all duration-300 min-w-max ${activeCategory === cat.id
                   ? "active text-black shadow-lg"
                   : "text-white hover:bg-gray-800/50 hover:scale-105"
                   }`}
@@ -143,37 +146,54 @@ export default function Home() {
           </nav>
         </header>
 
+
+
         {/* Main Content */}
         <main className="space-y-8 mt-4 sm:mt-6">
           {/* Category Title */}
           <div className="text-center mb-6">
             <h2 className="text-2xl sm:text-3xl font-bold mb-6 page-title text-white">
-              {searchQuery.trim() ? "نتائج البحث" : currentCategory?.title}
+              {searchQuery.trim() ? "نتائج البحث" : categories.find((c) => c.id === activeCategory)?.title}
             </h2>
             <div className="w-16 h-1 bg-gradient-to-r from-orange-500 to-orange-600 mx-auto rounded-full"></div>
           </div>
 
+          {/* Category Image - Only show when not searching */}
+          {!searchQuery.trim() && (
+            <div className="max-w-4xl mx-auto mb-8">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                <img
+                  src={categories.find((c) => c.id === activeCategory)?.photoUrl}
+                  alt={categories.find((c) => c.id === activeCategory)?.title}
+                  className="w-full h-64 sm:h-80 lg:h-96 object-cover"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                <div className="absolute bottom-4 right-4">
+                  <h3 className="text-2xl sm:text-3xl font-bold text-white">
+                    {categories.find((c) => c.id === activeCategory)?.title}
+                  </h3>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Products Grid */}
-          <section className={`grid gap-4 grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-7xl mx-auto ${isLoading ? 'opacity-50' : ''}`}>
+          <section className={`grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-4xl mx-auto ${isLoading ? 'opacity-50' : ''}`}>
             {visibleItems.length > 0 ? (
               visibleItems.map((item, index) => (
                 <article
                   key={item.id}
-                  className="product-card group rounded-2xl shadow-xl overflow-hidden"
+                  className="product-card group rounded-2xl shadow-xl overflow-hidden bg-gray-800/30 backdrop-blur-sm border border-gray-700/50"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  <div className="relative">
-                    <div className="aspect-[4/3] bg-gray-800 flex items-center justify-center text-gray-400 skeleton rounded-t-2xl">
-                      <span className="text-base">{item.title}</span>
-                    </div>
-                  </div>
-                  <div className="p-3 sm:p-6">
-                    <h3 className="text-sm sm:text-lg font-bold text-white mb-1 sm:mb-2">{item.title}</h3>
+                  <div className="p-4 sm:p-6">
+                    <h3 className="text-lg sm:text-xl font-bold text-white mb-2 text-center">{item.title}</h3>
                     {item.description && (
-                      <p className="text-gray-400 text-xs sm:text-sm mb-2 sm:mb-4 line-clamp-2">{item.description}</p>
+                      <p className="text-gray-400 text-sm mb-4 text-center line-clamp-2">{item.description}</p>
                     )}
                     <div className="flex items-center justify-center">
-                      <span className="text-lg sm:text-2xl font-bold text-orange-500" dir="ltr">{item.priceTl} TL</span>
+                      <span className="text-xl sm:text-2xl font-bold text-orange-500" dir="ltr">{item.priceTl} TL</span>
                     </div>
                   </div>
                 </article>
