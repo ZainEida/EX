@@ -251,6 +251,9 @@ body {
     min-width: auto;
     white-space: nowrap;
     overflow: visible;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
 
   .category-button:last-child {
@@ -264,6 +267,10 @@ body {
     -ms-overflow-style: none;
     padding-left: 4px;
     padding-right: 4px;
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: auto;
+    overflow-y: hidden;
   }
 
   nav::-webkit-scrollbar {
@@ -275,6 +282,17 @@ body {
     white-space: nowrap;
     overflow: visible;
     text-overflow: clip;
+  }
+
+  /* Force all buttons to be visible on mobile */
+  .category-button:nth-child(1),
+  .category-button:nth-child(2),
+  .category-button:nth-child(3),
+  .category-button:nth-child(4),
+  .category-button:nth-child(5) {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
 }
 

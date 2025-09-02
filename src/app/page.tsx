@@ -126,7 +126,7 @@ export default function Home() {
           </div>
 
           {/* Category Navigation - 5 Main Buttons */}
-          <nav className="flex gap-2 sm:gap-3 overflow-x-auto scrollbar-hide pb-6 mt-4 justify-start sm:justify-center">
+          <nav className="flex gap-2 sm:gap-3 overflow-x-auto scrollbar-hide pb-6 mt-4 justify-start sm:justify-center w-full">
             {categories.map((cat) => (
               <button
                 key={cat.id}
