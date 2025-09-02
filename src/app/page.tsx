@@ -137,8 +137,7 @@ export default function Home() {
                   }`}
               >
                 <span className="text-lg sm:text-xl">{cat.icon}</span>
-                <span className="hidden sm:inline">{cat.title}</span>
-                <span className="sm:hidden">{cat.title.length > 8 ? cat.title.substring(0, 8) + '...' : cat.title}</span>
+                <span>{cat.title}</span>
               </button>
             ))}
           </nav>
